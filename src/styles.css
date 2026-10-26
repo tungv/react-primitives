@@ -1,0 +1,285 @@
+/*
+ * @tungv/grid-list styles. Import once, after your own reset or Tailwind:
+ *
+ *   @import "@tungv/grid-list/styles.css";
+ *
+ * Layout and looks sit in the `components` cascade layer and every selector is wrapped in `:where()`,
+ * so a consumer's class or Tailwind utility on a part always wins over the part's own rule, whichever
+ * order the two are declared in. Tailwind v4 declares `components` before `utilities`; a stylesheet
+ * without layers beats every layered rule.
+ *
+ * Only the rules that must beat a consumer's own hover fill (a target's `hover:bg-*` while the shared
+ * highlight paints) sit outside the layer.
+ *
+ * Custom properties a consumer may set on any ancestor:
+ *   --gl-accent   selection tint and the hover fill's colour (default: currentColor)
+ *   --gl-radius   the hover fill's corner radius (default: 0)
+ *   --gl-ring     a focused row's ring colour (default: #1a56db)
+ *   --hover-highlight-duration, --hover-highlight-ease, --hover-highlight-inset,
+ *   --hover-highlight-z, --hover-highlight-rest-scale   the highlight's motion and placement
+ */
+
+@layer components {
+  /* ---------------------------------------------------------------------------------------------
+   * Grid list
+   * ------------------------------------------------------------------------------------------- */
+
+  /* The wrapper scrolls a grid that is wider than its column. */
+  :where([data-slot="grid-list-scroll"]) {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  :where([data-slot="grid-list-scroll"][data-scrollable]) {
+    max-height: 24rem;
+    overflow-y: auto;
+  }
+
+  /*
+   * Columns and gaps are the caller's (`gridClassName`); row groups and rows take them through subgrid,
+   * so a row's cells line up with every other row's.
+   *
+   * `clip`, not `hidden`: it makes no scroll container. The highlight's travel overshoots a little, and a
+   * grid row spans the grid's full width, so without the clip the overshoot would grow a scrollbar in the
+   * wrapper and move the row under a pointer mid-click. No `overflow-clip-margin`: its strip counts as
+   * scrollable overflow of the wrapper and brings the scrollbar back.
+   */
+  :where([data-slot="grid-list"]) {
+    display: grid;
+    overflow: clip;
+  }
+
+  :where([data-slot="grid-list-rowgroup"]) {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: subgrid;
+  }
+
+  /*
+   * A row isolates its stacking, so one whose control has opened a popover is lifted over the rows after
+   * it.
+   */
+  :where([data-slot="grid-list-row"]) {
+    position: relative;
+    isolation: isolate;
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: subgrid;
+  }
+
+  :where([data-slot="grid-list-row"]:has([aria-expanded="true"])) {
+    z-index: 1;
+  }
+
+  /* The focus ring is drawn over the row's own content, so a cell's background can never hide where focus is. */
+  :where([data-slot="grid-list-row"]:focus-visible) {
+    outline: none;
+  }
+
+  :where([data-slot="grid-list-row"]:focus-visible)::after {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    box-sizing: border-box;
+    border-radius: inherit;
+    border: 2px solid var(--gl-ring, #1a56db);
+  }
+
+  :where([data-slot="grid-list-row"][data-selected="true"]) {
+    background-color: color-mix(in oklab, var(--gl-accent, currentColor) 10%, transparent);
+  }
+
+  :where([data-slot="grid-list-columnheader"][data-sortable="true"]) {
+    cursor: pointer;
+  }
+
+  :where([data-slot="grid-list-rowheader"]) {
+    text-align: start;
+  }
+
+  /* How the grid's hover highlight looks; where it sits and how it moves are the hover highlight's, below. */
+  :where([data-slot="grid-list-highlight"]) {
+    border-radius: var(--gl-radius, 0);
+    background-color: color-mix(in oklab, var(--gl-accent, currentColor) 7%, transparent);
+  }
+
+  /*
+   * Pressing a row squishes the fill a little before it eases back. It shows only while the highlight
+   * does, as the highlight ignores touch.
+   */
+  @media (prefers-reduced-motion: no-preference) {
+    :where([role="grid"]:has([role="row"]:active) > [data-slot="grid-list-highlight"][data-visible]) {
+      transform: scale(0.985);
+    }
+  }
+
+  :where([data-slot="grid-list-check"]) {
+    position: relative;
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 1rem;
+    height: 1rem;
+    min-height: 0;
+    padding: 0;
+    border: 1px solid color-mix(in oklab, currentColor 45%, transparent);
+    border-radius: 0;
+    background-color: Canvas;
+    color: CanvasText;
+  }
+
+  :where([data-slot="grid-list-check"]:is([aria-checked="true"], [aria-checked="mixed"])) {
+    border-color: var(--gl-accent, CanvasText);
+    background-color: var(--gl-accent, CanvasText);
+    color: Canvas;
+  }
+
+  /* ---------------------------------------------------------------------------------------------
+   * Hover highlight
+   *
+   * One highlight shared by a group of targets, moved between them by CSS anchor positioning: targets
+   * carry `anchor-name`, the highlight carries `position-anchor`, and the browser re-resolves the
+   * geometry every frame. Nothing measures anything, which is what keeps the highlight glued to its
+   * target through scrolling, font loading and animated layout without a single
+   * `getBoundingClientRect`.
+   * ------------------------------------------------------------------------------------------- */
+
+  :where([data-hover-highlight-group]) {
+    position: relative;
+    /*
+     * Load-bearing, not decorative. A surface the group sits on may paint its own background, and
+     * without a stacking context here a `z-index: -1` child would slide behind it and never be seen.
+     */
+    isolation: isolate;
+  }
+
+  /*
+   * Anchor names are document-wide by default, so a group nested inside another would otherwise offer
+   * its targets to both highlights. Scoping them to the group that owns them keeps the two independent,
+   * and costs nothing where it is unsupported: the names are already unique per group.
+   */
+  @supports (anchor-scope: all) {
+    :where([data-hover-highlight-group]) {
+      anchor-scope: all;
+    }
+  }
+
+  /*
+   * Position and size are four separate properties rather than the four insets because that is what
+   * lets the move snap without the box rubber-banding: with `top`/`right`/`bottom`/`left` the height is
+   * the difference between two overshooting edges, so any jump between differently sized targets
+   * stretches mid-flight.
+   *
+   * Every `anchor()` carries a fallback. A `position-anchor` naming an element that is not there (no
+   * target hovered yet, or one that unmounted while it was the active anchor) otherwise collapses the box
+   * to 0x0 at the end of the group; falling back to zero height leaves that state simply invisible.
+   */
+  :where([data-hover-highlight-fill]) {
+    position: absolute;
+    z-index: var(--hover-highlight-z, -1);
+    pointer-events: none;
+    top: calc(anchor(top, 0px) + var(--hover-highlight-inset, 0px));
+    left: calc(anchor(left, 0px) + var(--hover-highlight-inset, 0px));
+    width: calc(anchor-size(width, 0px) - 2 * var(--hover-highlight-inset, 0px));
+    height: calc(anchor-size(height, 0px) - 2 * var(--hover-highlight-inset, 0px));
+    /*
+     * Held in one custom property so the two `transition` declarations below cannot drift apart. It is
+     * declared here rather than on the group because a custom property substitutes its own `var()`s on
+     * the element that declares it: on the group, a duration set on the highlight itself would silently
+     * do nothing. Declared here it answers to both, since the knobs still inherit from the group.
+     *
+     * The travel and the resize get different curves on purpose. `top`/`left` carry the movement on a
+     * back-out curve that overshoots about 4% of the distance travelled (a neighbouring target barely
+     * kicks, a long jump lands with one), and the curve peaks early, so a pointer that keeps moving
+     * interrupts a settle rather than an overshoot and never double-bounces. `width`/`height` carry the
+     * resize on a curve that never overshoots, because a box that springs past its own size reads as a
+     * wobble rather than as snap.
+     */
+    --hover-highlight-motion:
+      top var(--hover-highlight-duration, 220ms) var(--hover-highlight-ease, cubic-bezier(0.16, 1.36, 0.36, 1)),
+      left var(--hover-highlight-duration, 220ms) var(--hover-highlight-ease, cubic-bezier(0.16, 1.36, 0.36, 1)),
+      width var(--hover-highlight-duration, 220ms) cubic-bezier(0.22, 1, 0.36, 1),
+      height var(--hover-highlight-duration, 220ms) cubic-bezier(0.22, 1, 0.36, 1),
+      transform var(--hover-highlight-duration, 220ms) var(--hover-highlight-ease, cubic-bezier(0.16, 1.36, 0.36, 1));
+    opacity: 0;
+    /* Appearing is a small pop rather than a plain fade: the snap curve carries the scale past 1 and back. */
+    transform: scale(var(--hover-highlight-rest-scale, 0.96));
+    transition: var(--hover-highlight-motion), opacity 120ms linear;
+  }
+
+  /*
+   * Fading in waits until the move is all but over, so returning to a group after leaving it looks like
+   * the highlight appears on the target entered instead of flying across the list to meet the pointer.
+   * Fading out needs no delay, and gets none: the browser reads the timing from the after-change style,
+   * and only the entering direction matches this selector.
+   */
+  :where([data-hover-highlight-fill][data-visible]) {
+    opacity: 1;
+    transform: none;
+    transition: var(--hover-highlight-motion), opacity 120ms linear 120ms;
+  }
+
+  /*
+   * Reduced motion drops the travel, which is the part that triggers, and keeps the fade, which is not:
+   * a filled block that appears with no transition at all is a harder flash than a cross-fade. The
+   * property list is re-declared rather than the duration zeroed, because zeroing would take the fade
+   * with it.
+   */
+  @media (prefers-reduced-motion: reduce) {
+    :where([data-hover-highlight-fill]),
+    :where([data-hover-highlight-fill][data-visible]) {
+      transition: opacity 120ms linear;
+    }
+
+    :where([role="grid"]:has([role="row"]:active) > [data-slot="grid-list-highlight"][data-visible]) {
+      transform: none;
+    }
+  }
+}
+
+/*
+ * Outside the layer: these must beat a consumer's own rules.
+ *
+ * Without anchor positioning, in forced colours and in print the highlight is not drawn. Forced colours
+ * rewrite `background-color` to a system colour, which turns a decoration into an opaque block over the
+ * row, and print drops backgrounds but can still paginate the empty box. All three fall back to the
+ * target's own hover styling, which is why the suppression below is gated rather than unconditional.
+ */
+@supports not (anchor-name: --a) {
+  [data-hover-highlight-fill] {
+    display: none;
+  }
+}
+
+@media (forced-colors: active), print {
+  [data-hover-highlight-fill] {
+    display: none;
+  }
+}
+
+/*
+ * The highlight is the hover fill, so a target must stop painting its own: otherwise the pointer drags
+ * one fill around while the row it left keeps another. Only the pointer and keyboard states are blanked:
+ * `[data-active]` is left alone so a current page keeps its own background and the two never compete for
+ * the same meaning, and `:active` too, because the highlight ignores touch and the pressed background is
+ * the only feedback a tap gets.
+ *
+ * A target whose surface is part of what it is (a pile's tinted box) opts out with
+ * `data-hover-highlight="under"`: it keeps painting its own fill, translucent over the highlight. A
+ * target must not paint an opaque background at rest, or the highlight disappears behind it.
+ *
+ * Gated on `@supports`, `screen` and `forced-colors: none`, exactly the conditions under which the
+ * highlight is painted, and on the group rendering one.
+ */
+@supports (anchor-name: --a) {
+  @media screen and (forced-colors: none) {
+    [data-hover-highlight-group]:has([data-hover-highlight-fill])
+      [data-hover-highlight-target][data-hover-highlight-target]:not([data-hover-highlight="under"]):is(:hover, :focus-visible) {
+      background-color: transparent;
+    }
+  }
+}
