@@ -1,6 +1,3 @@
-/** Joins the class names that are set; the grid's own classes come first so a caller's can follow them. */
-export const cn = (...names: (string | false | null | undefined)[]): string | undefined => names.filter(Boolean).join(" ") || undefined;
-
 const FOCUSABLE =
   "button, input:not([type='hidden']), select, textarea, a[href], summary, [tabindex], [contenteditable='true']";
 

@@ -1,56 +1,17 @@
 {
-  "name": "@tungv/grid-list",
-  "version": "0.1.0",
-  "description": "Accessible React grid list: one tab stop, arrow-key rows and actions, selection, form fields, and a hover highlight that glides between rows. Safe for streamed, partially hydrated rows.",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/tungv/grid-list.git"
-  },
-  "keywords": [
-    "react",
-    "grid",
-    "listbox",
-    "aria",
-    "accessibility",
-    "keyboard",
-    "selection",
-    "rsc"
-  ],
+  "name": "tungv-primitives",
+  "private": true,
   "type": "module",
-  "sideEffects": [
-    "**/*.css"
+  "workspaces": [
+    "packages/*"
   ],
-  "files": [
-    "dist",
-    "src",
-    "!src/**/*.test.ts",
-    "!src/**/*.test.tsx",
-    "README.md",
-    "LICENSE"
-  ],
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
-    },
-    "./hover-highlight": {
-      "types": "./dist/hover-highlight.d.ts",
-      "default": "./dist/hover-highlight.js"
-    },
-    "./styles.css": "./dist/styles.css",
-    "./package.json": "./package.json"
-  },
   "scripts": {
-    "build": "rm -rf dist && tsc -p tsconfig.build.json && cp src/styles.css dist/styles.css",
-    "typecheck": "tsc --noEmit",
+    "build": "tsc -b packages/slot/tsconfig.build.json packages/hover-highlight/tsconfig.build.json packages/grid-list/tsconfig.build.json && cp packages/hover-highlight/src/styles.css packages/hover-highlight/dist/ && cp packages/grid-list/src/styles.css packages/grid-list/dist/",
+    "typecheck": "tsc -p packages/slot && tsc -p packages/hover-highlight && tsc -p packages/grid-list && tsc -p scripts",
     "test": "bun test",
-    "check": "bun run typecheck && bun run test && bun run build && bun scripts/check-dist.ts",
-    "prepublishOnly": "bun run check"
-  },
-  "peerDependencies": {
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "check": "bun run clean && bun run build && bun run typecheck && bun run test && bun scripts/check-dist.ts",
+    "release": "bun run check && bun scripts/publish.ts",
+    "clean": "rm -rf packages/*/dist"
   },
   "devDependencies": {
     "@happy-dom/global-registrator": "^21.0.4",

@@ -1,7 +1,7 @@
 "use client";
 
-// Its geometry, motion and the targets' blanked hover fill are in styles.css, keyed on the
-// `data-hover-highlight-*` attributes each part carries.
+// Its geometry, motion and the targets' blanked hover fill are in styles.css (`@tungv/hover-highlight/styles.css`),
+// keyed on the `data-hover-highlight-*` attributes each part carries.
 import {
   cloneElement,
   type ComponentProps,
@@ -14,7 +14,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { Slot, mergeRefs, mergeSlotProps } from "./slot.js";
+import { Slot, mergeRefs, mergeSlotProps } from "@tungv/slot";
 
 /**
  * One highlight that follows the pointer across the targets of a group, positioned entirely by CSS

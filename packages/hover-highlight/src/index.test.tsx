@@ -1,6 +1,6 @@
 import { expect, test } from "bun:test";
 import { renderToStaticMarkup } from "react-dom/server";
-import { HoverHighlight, HoverHighlightGroup, HoverHighlightTarget, useHoverHighlightTarget } from "./hover-highlight.js";
+import { HoverHighlight, HoverHighlightGroup, HoverHighlightTarget, useHoverHighlightTarget } from "./index.js";
 
 function Target() {
   return <div {...useHoverHighlightTarget()} />;

@@ -30,10 +30,4 @@ export type {
 } from "./types.js";
 export { useSelectedRowsData, useFocusedRowData } from "./state.js";
 export { useGridTabNavigation, GridTabNavigation, useRowData } from "./hooks.js";
-export {
-  HoverHighlightGroup,
-  HoverHighlight,
-  HoverHighlightTarget,
-  useHoverHighlightTarget,
-  type HoverHighlightTargetProps,
-} from "./hover-highlight.js";
+export { usePileToggle, pileRowEnter } from "./pile.js";

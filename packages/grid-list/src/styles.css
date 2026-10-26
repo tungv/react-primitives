@@ -1,0 +1,146 @@
+/*
+ * @tungv/grid-list styles. Import once, after your own reset or Tailwind:
+ *
+ *   @import "@tungv/grid-list/styles.css";
+ *
+ * It brings the hover highlight's own stylesheet with it (the import below).
+ *
+ * Layout and looks sit in the `components` cascade layer and every selector is wrapped in `:where()`,
+ * so a consumer's class or Tailwind utility on a part always wins over the part's own rule, whichever
+ * order the two are declared in. Tailwind v4 declares `components` before `utilities`; a stylesheet
+ * without layers beats every layered rule.
+ *
+ * Custom properties a consumer may set on any ancestor:
+ *   --gl-accent   selection tint and the hover fill's colour (default: currentColor)
+ *   --gl-radius   the hover fill's corner radius (default: 0)
+ *   --gl-ring     a focused row's ring colour (default: #1a56db)
+ * and the hover highlight's own, listed in @tungv/hover-highlight/styles.css.
+ */
+
+@import "@tungv/hover-highlight/styles.css";
+
+@layer components {
+  /* ---------------------------------------------------------------------------------------------
+   * Grid list
+   * ------------------------------------------------------------------------------------------- */
+
+  /* The wrapper scrolls a grid that is wider than its column. */
+  :where([data-slot="grid-list-scroll"]) {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  :where([data-slot="grid-list-scroll"][data-scrollable]) {
+    max-height: 24rem;
+    overflow-y: auto;
+  }
+
+  /*
+   * Columns and gaps are the caller's (`gridClassName`); row groups and rows take them through subgrid,
+   * so a row's cells line up with every other row's.
+   *
+   * `clip`, not `hidden`: it makes no scroll container. The highlight's travel overshoots a little, and a
+   * grid row spans the grid's full width, so without the clip the overshoot would grow a scrollbar in the
+   * wrapper and move the row under a pointer mid-click. No `overflow-clip-margin`: its strip counts as
+   * scrollable overflow of the wrapper and brings the scrollbar back.
+   */
+  :where([data-slot="grid-list"]) {
+    display: grid;
+    overflow: clip;
+  }
+
+  :where([data-slot="grid-list-rowgroup"]) {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: subgrid;
+  }
+
+  /*
+   * A row isolates its stacking, so one whose control has opened a popover is lifted over the rows after
+   * it.
+   */
+  :where([data-slot="grid-list-row"]) {
+    position: relative;
+    isolation: isolate;
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: subgrid;
+  }
+
+  :where([data-slot="grid-list-row"]:has([aria-expanded="true"])) {
+    z-index: 1;
+  }
+
+  /* The focus ring is drawn over the row's own content, so a cell's background can never hide where focus is. */
+  :where([data-slot="grid-list-row"]:focus-visible) {
+    outline: none;
+  }
+
+  :where([data-slot="grid-list-row"]:focus-visible)::after {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    box-sizing: border-box;
+    border-radius: inherit;
+    border: 2px solid var(--gl-ring, #1a56db);
+  }
+
+  :where([data-slot="grid-list-row"][data-selected="true"]) {
+    background-color: color-mix(in oklab, var(--gl-accent, currentColor) 10%, transparent);
+  }
+
+  :where([data-slot="grid-list-columnheader"][data-sortable="true"]) {
+    cursor: pointer;
+  }
+
+  :where([data-slot="grid-list-rowheader"]) {
+    text-align: start;
+  }
+
+  /* How the grid's hover highlight looks; where it sits and how it moves are @tungv/hover-highlight's. */
+  :where([data-slot="grid-list-highlight"]) {
+    border-radius: var(--gl-radius, 0);
+    background-color: color-mix(in oklab, var(--gl-accent, currentColor) 7%, transparent);
+  }
+
+  /*
+   * Pressing a row squishes the fill a little before it eases back. It shows only while the highlight
+   * does, as the highlight ignores touch.
+   */
+  @media (prefers-reduced-motion: no-preference) {
+    :where([role="grid"]:has([role="row"]:active) > [data-slot="grid-list-highlight"][data-visible]) {
+      transform: scale(0.985);
+    }
+  }
+
+  :where([data-slot="grid-list-check"]) {
+    position: relative;
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 1rem;
+    height: 1rem;
+    min-height: 0;
+    padding: 0;
+    border: 1px solid color-mix(in oklab, currentColor 45%, transparent);
+    border-radius: 0;
+    background-color: Canvas;
+    color: CanvasText;
+  }
+
+  :where([data-slot="grid-list-check"]:is([aria-checked="true"], [aria-checked="mixed"])) {
+    border-color: var(--gl-accent, CanvasText);
+    background-color: var(--gl-accent, CanvasText);
+    color: Canvas;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :where([role="grid"]:has([role="row"]:active) > [data-slot="grid-list-highlight"][data-visible]) {
+      transform: none;
+    }
+  }
+}

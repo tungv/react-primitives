@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "jsx": "react-jsx",
     "module": "nodenext",
     "moduleResolution": "nodenext",
@@ -17,8 +21,10 @@
     "noPropertyAccessFromIndexSignature": true,
     "isolatedModules": true,
     "verbatimModuleSyntax": true,
-    "noEmit": true,
-    "types": ["bun"]
-  },
-  "include": ["src", "scripts"]
+    "types": [],
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "composite": true
+  }
 }

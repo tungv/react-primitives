@@ -1,7 +1,9 @@
-"use client";
-
+// No "use client": nothing here holds state, so a server component can render a Slot too.
 import { Children, cloneElement, isValidElement, type ComponentPropsWithRef, type ReactElement, type Ref } from "react";
-import { cn } from "./utils.js";
+
+/** Joins the class names that are set, ours first so a child's own classes can follow them. */
+export const cn = (...names: (string | false | null | undefined)[]): string | undefined =>
+  names.filter(Boolean).join(" ") || undefined;
 
 type Props = Record<string, unknown>;
 
