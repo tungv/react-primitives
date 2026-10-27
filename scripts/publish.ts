@@ -4,7 +4,7 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
-const ORDER = ["slot", "hover-highlight", "grid-list"];
+const ORDER = ["react-slot", "react-hover-highlight", "react-grid-list"];
 const dryRun = process.argv.includes("--dry-run");
 const root = join(import.meta.dir, "..");
 

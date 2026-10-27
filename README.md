@@ -1,12 +1,12 @@
-# tungv/primitives
+# tungv/react-primitives
 
 Accessible React primitives for lists people move through and act on, each published on its own:
 
 | Package | | Depends on |
 | --- | --- | --- |
-| [`@tungv/grid-list`](packages/grid-list) | Grid lists: one tab stop, arrow-key rows and actions, selection, form fields, composite rows. Safe for streamed, partially hydrated rows. | slot, hover-highlight |
-| [`@tungv/hover-highlight`](packages/hover-highlight) | One hover fill that glides between a list's items, positioned by CSS anchor positioning. | slot |
-| [`@tungv/slot`](packages/slot) | `asChild`/`render` prop merging. | none |
+| [`@tungv/react-grid-list`](packages/react-grid-list) | Grid lists: one tab stop, arrow-key rows and actions, selection, form fields, composite rows. Safe for streamed, partially hydrated rows. | react-slot, react-hover-highlight |
+| [`@tungv/react-hover-highlight`](packages/react-hover-highlight) | One hover fill that glides between a list's items, positioned by CSS anchor positioning. | react-slot |
+| [`@tungv/react-slot`](packages/react-slot) | `asChild`/`render` prop merging. | none |
 
 Install the one you use; its dependencies come with it. React 19 is a peer dependency of each. The packages
 with styles ship one stylesheet each (`@tungv/<name>/styles.css`). The rules sit in the `components` cascade

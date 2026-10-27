@@ -1,7 +1,7 @@
 /*
- * @tungv/hover-highlight styles. Import once, after your own reset or Tailwind:
+ * @tungv/react-hover-highlight styles. Import once, after your own reset or Tailwind:
  *
- *   @import "@tungv/hover-highlight/styles.css";
+ *   @import "@tungv/react-hover-highlight/styles.css";
  *
  * Geometry and motion sit in the `components` cascade layer and every selector is wrapped in `:where()`,
  * so a consumer's class or Tailwind utility on the highlight always wins. Only the rules that must beat

@@ -1,13 +1,13 @@
 {
-  "name": "tungv-primitives",
+  "name": "tungv-react-primitives",
   "private": true,
   "type": "module",
   "workspaces": [
     "packages/*"
   ],
   "scripts": {
-    "build": "tsc -b packages/slot/tsconfig.build.json packages/hover-highlight/tsconfig.build.json packages/grid-list/tsconfig.build.json && cp packages/hover-highlight/src/styles.css packages/hover-highlight/dist/ && cp packages/grid-list/src/styles.css packages/grid-list/dist/",
-    "typecheck": "tsc -p packages/slot && tsc -p packages/hover-highlight && tsc -p packages/grid-list && tsc -p scripts",
+    "build": "tsc -b packages/react-slot/tsconfig.build.json packages/react-hover-highlight/tsconfig.build.json packages/react-grid-list/tsconfig.build.json && cp packages/react-hover-highlight/src/styles.css packages/react-hover-highlight/dist/ && cp packages/react-grid-list/src/styles.css packages/react-grid-list/dist/",
+    "typecheck": "tsc -p packages/react-slot && tsc -p packages/react-hover-highlight && tsc -p packages/react-grid-list && tsc -p scripts",
     "test": "bun test",
     "check": "bun run clean && bun run build && bun run typecheck && bun run test && bun scripts/check-dist.ts",
     "release": "bun run check && bun scripts/publish.ts",

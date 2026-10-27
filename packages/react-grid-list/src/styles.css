@@ -1,7 +1,7 @@
 /*
- * @tungv/grid-list styles. Import once, after your own reset or Tailwind:
+ * @tungv/react-grid-list styles. Import once, after your own reset or Tailwind:
  *
- *   @import "@tungv/grid-list/styles.css";
+ *   @import "@tungv/react-grid-list/styles.css";
  *
  * It brings the hover highlight's own stylesheet with it (the import below).
  *
@@ -14,10 +14,10 @@
  *   --gl-accent   selection tint and the hover fill's colour (default: currentColor)
  *   --gl-radius   the hover fill's corner radius (default: 0)
  *   --gl-ring     a focused row's ring colour (default: #1a56db)
- * and the hover highlight's own, listed in @tungv/hover-highlight/styles.css.
+ * and the hover highlight's own, listed in @tungv/react-hover-highlight/styles.css.
  */
 
-@import "@tungv/hover-highlight/styles.css";
+@import "@tungv/react-hover-highlight/styles.css";
 
 @layer components {
   /* ---------------------------------------------------------------------------------------------
@@ -99,7 +99,7 @@
     text-align: start;
   }
 
-  /* How the grid's hover highlight looks; where it sits and how it moves are @tungv/hover-highlight's. */
+  /* How the grid's hover highlight looks; where it sits and how it moves are @tungv/react-hover-highlight's. */
   :where([data-slot="grid-list-highlight"]) {
     border-radius: var(--gl-radius, 0);
     background-color: color-mix(in oklab, var(--gl-accent, currentColor) 7%, transparent);

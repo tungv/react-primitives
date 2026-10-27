@@ -1,12 +1,12 @@
 {
-  "name": "@tungv/grid-list",
+  "name": "@tungv/react-grid-list",
   "version": "0.1.0",
   "description": "Accessible React grid list: one tab stop, arrow-key rows and actions, selection, form fields, and a hover highlight that glides between rows. Safe for streamed, partially hydrated rows.",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tungv/primitives.git",
-    "directory": "packages/grid-list"
+    "url": "git+https://github.com/tungv/react-primitives.git",
+    "directory": "packages/react-grid-list"
   },
   "keywords": [
     "react",
@@ -47,7 +47,7 @@
     "react-dom": "^19.0.0"
   },
   "dependencies": {
-    "@tungv/hover-highlight": "workspace:^",
-    "@tungv/slot": "workspace:^"
+    "@tungv/react-hover-highlight": "workspace:^",
+    "@tungv/react-slot": "workspace:^"
   }
 }

@@ -10,9 +10,9 @@ const root = join(import.meta.dir, "..");
 
 /** Each package, and the modules in it that must stay client modules. */
 const PACKAGES: Record<string, string[]> = {
-  slot: [],
-  "hover-highlight": ["index"],
-  "grid-list": ["components", "hooks", "state", "reducer-context", "pile"],
+  "react-slot": [],
+  "react-hover-highlight": ["index"],
+  "react-grid-list": ["components", "hooks", "state", "reducer-context", "pile"],
 };
 
 const failures: string[] = [];

@@ -1,12 +1,12 @@
 {
-  "name": "@tungv/slot",
+  "name": "@tungv/react-slot",
   "version": "0.1.0",
   "description": "asChild and render-prop merging for React: one child element rendered with a part's props laid under its own (handlers chained, classes joined, styles merged, refs both set).",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tungv/primitives.git",
-    "directory": "packages/slot"
+    "url": "git+https://github.com/tungv/react-primitives.git",
+    "directory": "packages/react-slot"
   },
   "keywords": [
     "react",

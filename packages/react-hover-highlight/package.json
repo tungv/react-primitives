@@ -1,12 +1,12 @@
 {
-  "name": "@tungv/hover-highlight",
+  "name": "@tungv/react-hover-highlight",
   "version": "0.1.0",
   "description": "One hover highlight that glides between the items of a React list, positioned by CSS anchor positioning. No measuring, no re-renders on hover, safe while rows stream in.",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tungv/primitives.git",
-    "directory": "packages/hover-highlight"
+    "url": "git+https://github.com/tungv/react-primitives.git",
+    "directory": "packages/react-hover-highlight"
   },
   "keywords": [
     "react",
@@ -45,6 +45,6 @@
     "react": "^19.0.0"
   },
   "dependencies": {
-    "@tungv/slot": "workspace:^"
+    "@tungv/react-slot": "workspace:^"
   }
 }

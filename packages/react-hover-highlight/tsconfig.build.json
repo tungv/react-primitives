@@ -14,10 +14,7 @@
   ],
   "references": [
     {
-      "path": "../slot/tsconfig.build.json"
-    },
-    {
-      "path": "../hover-highlight/tsconfig.build.json"
+      "path": "../react-slot/tsconfig.build.json"
     }
   ]
 }

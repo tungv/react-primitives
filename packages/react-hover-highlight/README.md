@@ -1,25 +1,25 @@
-# @tungv/hover-highlight
+# @tungv/react-hover-highlight
 
 One hover highlight that glides between the items of a list, instead of each item lighting its own background.
 It is positioned by CSS anchor positioning: React passes only an anchor name, and the browser keeps the fill
 on its item through scrolling, reflow and animated layout without measuring anything. Hovering re-renders
 nothing, so it is safe in lists whose items still stream in through Suspense.
 
-React 19 and modern browsers. Part of [tungv/primitives](https://github.com/tungv/primitives); it builds on
-[`@tungv/slot`](https://github.com/tungv/primitives/tree/main/packages/slot), and
-[`@tungv/grid-list`](https://github.com/tungv/primitives/tree/main/packages/grid-list) uses it for every grid.
+React 19 and modern browsers. Part of [tungv/react-primitives](https://github.com/tungv/react-primitives); it builds on
+[`@tungv/react-slot`](https://github.com/tungv/react-primitives/tree/main/packages/react-slot), and
+[`@tungv/react-grid-list`](https://github.com/tungv/react-primitives/tree/main/packages/react-grid-list) uses it for every grid.
 
 ```sh
-npm install @tungv/hover-highlight
+npm install @tungv/react-hover-highlight
 ```
 
 ```css
 /* After your reset or `@import "tailwindcss";`. */
-@import "@tungv/hover-highlight/styles.css";
+@import "@tungv/react-hover-highlight/styles.css";
 ```
 
 ```tsx
-import { HoverHighlight, HoverHighlightGroup, HoverHighlightTarget } from "@tungv/hover-highlight";
+import { HoverHighlight, HoverHighlightGroup, HoverHighlightTarget } from "@tungv/react-hover-highlight";
 
 <HoverHighlightGroup render={<nav aria-label="Main" />}>
   <HoverHighlight className="rounded-md bg-neutral-100" />

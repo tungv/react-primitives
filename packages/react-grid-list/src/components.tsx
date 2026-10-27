@@ -7,8 +7,8 @@ import {
   HoverHighlightGroup,
   type HoverHighlightTargetProps,
   useHoverHighlightTarget,
-} from "@tungv/hover-highlight";
-import { Slot } from "@tungv/slot";
+} from "@tungv/react-hover-highlight";
+import { Slot } from "@tungv/react-slot";
 import {
   useContext,
   useEffect,

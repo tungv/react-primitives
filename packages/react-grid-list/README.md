@@ -1,25 +1,25 @@
-# @tungv/grid-list
+# @tungv/react-grid-list
 
 Accessible React grid lists: rows a person moves through and acts on, with aligned columns. The grid is one
 tab stop. Arrow keys move between rows and between a row's controls. Rows can be selected, and a named grid
 submits with a form. One hover highlight glides between rows. It stays correct when rows stream in through
 Suspense and hydrate one at a time.
 
-React 19 and modern browsers. Part of [tungv/primitives](https://github.com/tungv/primitives): it builds on
-[`@tungv/slot`](https://github.com/tungv/primitives/tree/main/packages/slot) and [`@tungv/hover-highlight`](https://github.com/tungv/primitives/tree/main/packages/hover-highlight), which install with it.
+React 19 and modern browsers. Part of [tungv/react-primitives](https://github.com/tungv/react-primitives): it builds on
+[`@tungv/react-slot`](https://github.com/tungv/react-primitives/tree/main/packages/react-slot) and [`@tungv/react-hover-highlight`](https://github.com/tungv/react-primitives/tree/main/packages/react-hover-highlight), which install with it.
 
 ```sh
-npm install @tungv/grid-list
+npm install @tungv/react-grid-list
 ```
 
 ```css
 /* After your reset or `@import "tailwindcss";`, so the grid's rules sit above the base layer.
    It imports the hover highlight's stylesheet itself. */
-@import "@tungv/grid-list/styles.css";
+@import "@tungv/react-grid-list/styles.css";
 ```
 
 ```tsx
-import { GridBody, GridListCell, GridListContainer, GridListContent, GridListRow } from "@tungv/grid-list";
+import { GridBody, GridListCell, GridListContainer, GridListContent, GridListRow } from "@tungv/react-grid-list";
 
 <GridListContainer aria-labelledby="queue-heading">
   <GridListContent gridClassName="grid-cols-[minmax(0,1fr)_auto] gap-x-3">
@@ -111,7 +111,7 @@ targets. A row whose surface is part of what it is (a tinted card) passes `data-
 its fill, translucent over the highlight. The highlight ignores touch, and it is not drawn without anchor
 positioning, in forced colours or in print, where rows keep their own hover styling.
 
-For other lists (navigation, menus), use [`@tungv/hover-highlight`](https://github.com/tungv/primitives/tree/main/packages/hover-highlight) directly.
+For other lists (navigation, menus), use [`@tungv/react-hover-highlight`](https://github.com/tungv/react-primitives/tree/main/packages/react-hover-highlight) directly.
 
 ## Selection and forms
 

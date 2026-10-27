@@ -1,4 +1,4 @@
-# @tungv/slot
+# @tungv/react-slot
 
 `asChild` and `render`-prop composition for React, with no other dependencies. A component renders the one child
 element it is given, with its own props merged under the child's:
@@ -9,15 +9,15 @@ element it is given, with its own props merged under the child's:
 - refs are both set;
 - any other prop is the child's when both set it.
 
-Part of [tungv/primitives](https://github.com/tungv/primitives). It has no `"use client"` directive and holds no
+Part of [tungv/react-primitives](https://github.com/tungv/react-primitives). It has no `"use client"` directive and holds no
 state, so server components can render it too.
 
 ```sh
-npm install @tungv/slot
+npm install @tungv/react-slot
 ```
 
 ```tsx
-import { Slot } from "@tungv/slot";
+import { Slot } from "@tungv/react-slot";
 
 function Row({ asChild, ...props }: { asChild?: boolean } & React.ComponentProps<"div">) {
   const rowProps = { role: "row", className: "row", ...props };
