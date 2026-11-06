@@ -10,10 +10,14 @@
     "typecheck": "tsc -p packages/react-slot && tsc -p packages/react-reducer-context && tsc -p packages/react-reserve-layout && tsc -p packages/react-hover-highlight && tsc -p packages/react-grid-list && tsc -p packages/react-form && tsc -p packages/next-interactive-form && tsc -p packages/next-navigation-form && tsc -p scripts",
     "test": "bun test --path-ignore-patterns '**/*.dom.test.tsx' && bun test --preload ./scripts/happy-dom.ts .dom.test",
     "check": "bun run clean && bun run build && bun run typecheck && bun run test && bun scripts/check-dist.ts",
-    "release": "bun run check && bun scripts/publish.ts",
-    "clean": "rm -rf packages/*/dist"
+    "clean": "rm -rf packages/*/dist",
+    "changeset": "changeset",
+    "changeset:version": "changeset version && bun install",
+    "release:first": "bun run check && bun scripts/publish.ts",
+    "release:trust": "bun scripts/trust-publisher.ts"
   },
   "devDependencies": {
+    "@changesets/cli": "^3.0.3",
     "@happy-dom/global-registrator": "^21.0.4",
     "@testing-library/react": "^16.3.3",
     "@testing-library/user-event": "^14.6.8",

@@ -47,8 +47,8 @@
     "react-dom": "^19.0.0"
   },
   "dependencies": {
-    "@tungv/react-hover-highlight": "workspace:^",
-    "@tungv/react-reducer-context": "workspace:^",
-    "@tungv/react-slot": "workspace:^"
+    "@tungv/react-hover-highlight": "^0.1.0",
+    "@tungv/react-reducer-context": "^0.1.0",
+    "@tungv/react-slot": "^0.1.0"
   }
 }
