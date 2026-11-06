@@ -1,6 +1,6 @@
-// Publishes every package whose version is not on npm yet, dependencies first. `bun publish` replaces
-// the `workspace:^` ranges between them with the versions being published; `npm publish` would not.
-// Pass --dry-run to see what would go out.
+// The first release, from a maintainer's machine: publishes every package whose version is not on npm yet,
+// dependencies first. npm only lets a package that exists name a trusted publisher, so this runs once; after
+// `bun run release:trust`, the Release workflow publishes everything. Pass --dry-run to see what would go out.
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 

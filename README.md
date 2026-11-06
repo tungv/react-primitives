@@ -23,20 +23,42 @@ production apps before being split out here.
 ## Development
 
 Bun workspaces. Each package builds with `tsc` to ESM plus declarations, one file per module, so `"use client"`
-directives survive for React Server Components.
+directives survive for React Server Components. Packages depend on each other with ordinary version ranges
+(`^0.1.0`), which Bun links to the local copies; Changesets keeps them current on release.
 
 ```sh
 bun install
-bun run check     # build, typecheck, tests (server rendering and happy-dom interaction), dist check
-bun run release   # check, then `bun publish` each package whose version is not on npm, dependencies first
+bun run check       # build, typecheck, tests (server rendering and happy-dom interaction), dist check
+bun run changeset   # describe a change to one or more packages, for the next release
 ```
 
 `scripts/check-dist.ts` checks each built package: client modules start with `"use client"`, every export
-resolves, packing replaces `workspace:` ranges with versions, and Node can import it.
+resolves, the packed manifest has no `workspace:` ranges, and Node can import it (except the `next-` packages,
+which only Next's bundler resolves).
 
-To release, bump the changed packages' versions (and the ranges of packages that need the new version), then
-run `bun run release`. Publish with `bun publish`, which the script uses, never `npm publish`: npm leaves the
-`workspace:` ranges in place.
+## Releasing
+
+Releases run in GitHub Actions (`.github/workflows/release.yml`), with [Changesets](https://changesets.dev):
+
+1. A pull request that changes a package adds a changeset (`bun run changeset`): the packages, the bump, and a
+   line for the changelog.
+2. When it merges, the workflow opens or updates the **Release packages** pull request, which bumps versions,
+   updates the ranges of the packages that depend on them, and writes each package's `CHANGELOG.md`.
+3. Merging that pull request publishes every package whose version is not on npm yet, in dependency order, with
+   provenance, and tags and releases each on GitHub.
+
+Publishing uses npm [trusted publishing](https://docs.npmjs.com/trusted-publishers): the workflow proves its
+identity to npm with OIDC, so the repository holds no npm token. npm only lets a package that already exists name
+a trusted publisher, so the very first release is done once by hand:
+
+```sh
+npm login
+bun run release:first   # check, then publish each package not yet on npm, dependencies first
+bun run release:trust   # make release.yml each package's trusted publisher (npm 11.15+, asks for 2FA)
+```
+
+After that, set each package's publishing access on npmjs.com to "Require two-factor authentication and disallow
+tokens".
 
 ## Licence
 

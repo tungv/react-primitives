@@ -45,6 +45,6 @@
     "react": "^19.0.0"
   },
   "dependencies": {
-    "@tungv/react-slot": "workspace:^"
+    "@tungv/react-slot": "^0.1.0"
   }
 }

@@ -45,8 +45,8 @@
     "react": "^19.0.0"
   },
   "dependencies": {
-    "@tungv/react-slot": "workspace:^",
-    "@tungv/react-reducer-context": "workspace:^",
-    "@tungv/react-reserve-layout": "workspace:^"
+    "@tungv/react-slot": "^0.1.0",
+    "@tungv/react-reducer-context": "^0.1.0",
+    "@tungv/react-reserve-layout": "^0.1.0"
   }
 }
