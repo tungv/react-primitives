@@ -1,15 +1,15 @@
-# @tungv/react-interactive-form
+# @tungv/next-interactive-form
 
 A form that runs its action in a React transition, for Next.js App Router apps: the fields stay as typed while it
 runs, its errors show beside the fields they belong to, and the result can redirect, refresh the route or replace
 the form. Part of [tungv/react-primitives](https://github.com/tungv/react-primitives).
 
 ```sh
-npm install @tungv/react-interactive-form
+npm install @tungv/next-interactive-form
 ```
 
 ```css
-@import "@tungv/react-interactive-form/styles.css"; /* after your reset or Tailwind */
+@import "@tungv/next-interactive-form/styles.css"; /* after your reset or Tailwind */
 ```
 
 ```tsx
@@ -19,7 +19,7 @@ import {
   LoadingMessage,
   SubmitButton,
   SubmitMessage,
-} from "@tungv/react-interactive-form";
+} from "@tungv/next-interactive-form";
 import { ReserveLayout } from "@tungv/react-reserve-layout";
 
 <InteractiveForm fields={["email"]} action={saveProfile /* a Server Action, or any async function */}>

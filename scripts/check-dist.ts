@@ -16,15 +16,15 @@ const PACKAGES: Record<string, string[]> = {
   "react-hover-highlight": ["index"],
   "react-grid-list": ["components", "hooks", "state", "pile"],
   "react-form": ["form", "auto-submit", "masked-input"],
-  "react-interactive-form": ["interactive-form"],
-  "react-navigation-form": ["navigation-form"],
+  "next-interactive-form": ["interactive-form"],
+  "next-navigation-form": ["navigation-form"],
 };
 
 /**
  * Packages that import `next/navigation`. Next has no `exports` map, so only a bundler (Next's own, which
  * aliases that specifier) resolves it; plain Node cannot import these, and is not meant to.
  */
-const BUNDLER_ONLY = new Set(["react-interactive-form", "react-navigation-form"]);
+const BUNDLER_ONLY = new Set(["next-interactive-form", "next-navigation-form"]);
 
 const failures: string[] = [];
 

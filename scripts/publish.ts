@@ -11,8 +11,8 @@ const ORDER = [
   "react-hover-highlight",
   "react-grid-list",
   "react-form",
-  "react-interactive-form",
-  "react-navigation-form",
+  "next-interactive-form",
+  "next-navigation-form",
 ];
 const dryRun = process.argv.includes("--dry-run");
 const root = join(import.meta.dir, "..");

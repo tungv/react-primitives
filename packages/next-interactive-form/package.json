@@ -1,20 +1,19 @@
 {
-  "name": "@tungv/react-navigation-form",
+  "name": "@tungv/next-interactive-form",
   "version": "0.1.0",
-  "description": "GET forms that navigate with the Next.js router in a transition, keeping native form semantics as the no-JavaScript fallback.",
+  "description": "A React form that runs its action in a transition: per-field and form errors, pending state, focus restore, redirect and refresh with the Next.js router.",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tungv/react-primitives.git",
-    "directory": "packages/react-navigation-form"
+    "directory": "packages/next-interactive-form"
   },
   "keywords": [
     "react",
     "form",
     "nextjs",
-    "navigation",
-    "search",
-    "filters"
+    "transition",
+    "server-actions"
   ],
   "type": "module",
   "sideEffects": [
@@ -47,6 +46,7 @@
   },
   "dependencies": {
     "@tungv/react-slot": "workspace:^",
+    "@tungv/react-reducer-context": "workspace:^",
     "@tungv/react-reserve-layout": "workspace:^"
   },
   "devDependencies": {

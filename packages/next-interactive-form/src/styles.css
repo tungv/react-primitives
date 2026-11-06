@@ -1,7 +1,7 @@
 /*
- * @tungv/react-interactive-form styles. Import once, after your own reset or Tailwind:
+ * @tungv/next-interactive-form styles. Import once, after your own reset or Tailwind:
  *
- *   @import "@tungv/react-interactive-form/styles.css";
+ *   @import "@tungv/next-interactive-form/styles.css";
  *
  * It brings @tungv/react-reserve-layout's stylesheet with it, which the submit and loading messages
  * render in.

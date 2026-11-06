@@ -1,7 +1,7 @@
 /*
- * @tungv/react-navigation-form styles. Import once, after your own reset or Tailwind:
+ * @tungv/next-navigation-form styles. Import once, after your own reset or Tailwind:
  *
- *   @import "@tungv/react-navigation-form/styles.css";
+ *   @import "@tungv/next-navigation-form/styles.css";
  *
  * The form itself needs no styles of its own; this brings @tungv/react-reserve-layout's stylesheet, which
  * the submit and loading messages render in.

@@ -1,18 +1,18 @@
-# @tungv/react-navigation-form
+# @tungv/next-navigation-form
 
 GET forms for search and filters that navigate with the Next.js App Router, in a transition, while keeping a
 native `method="get"` form underneath. Part of [tungv/react-primitives](https://github.com/tungv/react-primitives).
 
 ```sh
-npm install @tungv/react-navigation-form
+npm install @tungv/next-navigation-form
 ```
 
 ```css
-@import "@tungv/react-navigation-form/styles.css"; /* after your reset or Tailwind; for the messages */
+@import "@tungv/next-navigation-form/styles.css"; /* after your reset or Tailwind; for the messages */
 ```
 
 ```tsx
-import { NavigationButton, NavigationForm } from "@tungv/react-navigation-form";
+import { NavigationButton, NavigationForm } from "@tungv/next-navigation-form";
 
 <NavigationForm action="/people" preventReset>
   <input name="q" defaultValue={q} />
