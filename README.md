@@ -47,21 +47,18 @@ Releases run in GitHub Actions (`.github/workflows/release.yml`), with [Changese
 3. Merging that pull request publishes every package whose version is not on npm yet, in dependency order, with
    provenance, and tags and releases each on GitHub.
 
-Publishing tries npm [trusted publishing](https://docs.npmjs.com/trusted-publishers) first: the workflow proves
-its identity to npm with OIDC, and needs no token. It falls back to the `NPM_TOKEN` repository secret, a granular
-npm access token. npm only lets a package that already exists name a trusted publisher, so the token publishes the
-first versions. After that:
+Publishing uses npm [trusted publishing](https://docs.npmjs.com/trusted-publishers): the workflow proves its
+identity to npm with OIDC, so the repository holds no npm token. npm only lets a package that already exists name
+a trusted publisher, so the very first release is done once by hand:
 
 ```sh
 npm login
+bun run release:first   # check, then publish each package not yet on npm, dependencies first
 bun run release:trust   # make release.yml each package's trusted publisher (npm 11.15+, asks for 2FA)
 ```
 
-Then delete the `NPM_TOKEN` secret and revoke the token, and set each package's publishing access on npmjs.com to
-"Require two-factor authentication and disallow tokens". Granular tokens expire after at most 90 days, and npm is
-retiring 2FA-bypass tokens for publishing, so trusted publishing is the path that keeps working.
-
-To publish without CI instead, `bun run release:first` publishes every package not yet on npm from your machine.
+After that, set each package's publishing access on npmjs.com to "Require two-factor authentication and disallow
+tokens".
 
 ## Licence
 

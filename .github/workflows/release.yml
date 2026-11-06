@@ -6,9 +6,8 @@
 # - no changesets, and a package whose version is not on npm yet: pack every such package, then publish
 #   them to npm in dependency order, with provenance, and tag and release each on GitHub.
 #
-# Publishing tries npm trusted publishing (OIDC) first, which needs this workflow configured as each
-# package's trusted publisher on npmjs.com, and falls back to the NPM_TOKEN secret. npm only lets an existing
-# package name a trusted publisher, so the token publishes the first versions; see "Releasing" in the README.
+# Publishing uses npm trusted publishing (OIDC), so the repository holds no npm token. Each package needs
+# this workflow configured as its trusted publisher on npmjs.com; see "Releasing" in the README.
 name: Release
 
 on:
@@ -126,6 +125,3 @@ jobs:
         with:
           pack-dir-artifact-id: ${{ needs.pack.outputs.pack-dir-artifact-id }}
           create-github-releases: true
-        env:
-          # Used only where trusted publishing is not set up yet; setup-node's .npmrc reads it.
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
