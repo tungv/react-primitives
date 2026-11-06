@@ -6,7 +6,8 @@ submits with a form. One hover highlight glides between rows. It stays correct w
 Suspense and hydrate one at a time.
 
 React 19 and modern browsers. Part of [tungv/react-primitives](https://github.com/tungv/react-primitives): it builds on
-[`@tungv/react-slot`](https://github.com/tungv/react-primitives/tree/main/packages/react-slot) and [`@tungv/react-hover-highlight`](https://github.com/tungv/react-primitives/tree/main/packages/react-hover-highlight), which install with it.
+[`@tungv/react-slot`](https://github.com/tungv/react-primitives/tree/main/packages/react-slot), [`@tungv/react-hover-highlight`](https://github.com/tungv/react-primitives/tree/main/packages/react-hover-highlight) and
+[`@tungv/react-reducer-context`](https://github.com/tungv/react-primitives/tree/main/packages/react-reducer-context), which install with it.
 
 ```sh
 npm install @tungv/react-grid-list

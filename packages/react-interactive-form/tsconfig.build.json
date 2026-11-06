@@ -1,0 +1,28 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "src",
+    "tsBuildInfoFile": "dist/.tsbuildinfo",
+    "module": "esnext",
+    "moduleResolution": "bundler"
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "src/**/*.test.ts",
+    "src/**/*.test.tsx"
+  ],
+  "references": [
+    {
+      "path": "../react-slot/tsconfig.build.json"
+    },
+    {
+      "path": "../react-reducer-context/tsconfig.build.json"
+    },
+    {
+      "path": "../react-reserve-layout/tsconfig.build.json"
+    }
+  ]
+}

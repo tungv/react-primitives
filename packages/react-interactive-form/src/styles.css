@@ -1,0 +1,43 @@
+/*
+ * @tungv/react-interactive-form styles. Import once, after your own reset or Tailwind:
+ *
+ *   @import "@tungv/react-interactive-form/styles.css";
+ *
+ * It brings @tungv/react-reserve-layout's stylesheet with it, which the submit and loading messages
+ * render in.
+ *
+ * These are the reference design's classes as plain CSS. They sit in the `components` cascade layer inside
+ * `:where()`, so a class you put on a part wins over them, whichever order the two are declared in.
+ *
+ * Custom properties, on the form or any ancestor:
+ *   --form-error-color   error messages (default: #dc2626)
+ */
+
+@import "@tungv/react-reserve-layout/styles.css";
+
+@layer components {
+  :where([data-slot="form-error-message"]) {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    color: var(--form-error-color, #dc2626);
+  }
+
+  /* A submit or action button pulses while its action runs; with reduced motion it dims instead. */
+  @media (prefers-reduced-motion: no-preference) {
+    :where([data-slot="submit-button"][data-pending], [data-slot="action-button"][data-pending]) {
+      animation: tungv-form-pending-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :where([data-slot="submit-button"][data-pending], [data-slot="action-button"][data-pending]) {
+      opacity: 0.5;
+    }
+  }
+
+  @keyframes tungv-form-pending-pulse {
+    50% {
+      opacity: 0.5;
+    }
+  }
+}

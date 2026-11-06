@@ -1,0 +1,46 @@
+{
+  "name": "@tungv/react-reserve-layout",
+  "version": "0.1.0",
+  "description": "Swap content in React without layout shift: every alternative stacks in one grid cell, so the hidden ones reserve the largest size.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tungv/react-primitives.git",
+    "directory": "packages/react-reserve-layout"
+  },
+  "keywords": [
+    "react",
+    "layout",
+    "layout-shift",
+    "button",
+    "loading"
+  ],
+  "type": "module",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "files": [
+    "dist",
+    "!dist/.tsbuildinfo",
+    "src",
+    "!src/**/*.test.ts",
+    "!src/**/*.test.tsx",
+    "README.md",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./styles.css": "./dist/styles.css",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "tsc -b tsconfig.build.json && cp src/styles.css dist/styles.css",
+    "prepack": "bun run build"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0"
+  }
+}

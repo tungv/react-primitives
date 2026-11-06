@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useSyncExternalStore, type MouseEvent } from "react";
-import { createReducerContext } from "./reducer-context.js";
+import { createReducerContext } from "@tungv/react-reducer-context";
 import { createGridStore, detachedGridStore, type GridStore } from "./store.js";
 import type {
   GridDataState,

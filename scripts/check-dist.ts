@@ -1,7 +1,7 @@
 // Checks each built package as a consumer meets it: client modules keep their "use client" directive
 // (React Server Components bundlers read it from the file's first statement), every export in its
 // package.json resolves to a file, its packed manifest names real versions instead of `workspace:`
-// ranges, and its entry point loads under plain Node ESM.
+// ranges, and its entry point loads under plain Node ESM (except the Next packages, see BUNDLER_ONLY).
 import { existsSync, mkdtempSync, readFileSync, readdirSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -11,9 +11,20 @@ const root = join(import.meta.dir, "..");
 /** Each package, and the modules in it that must stay client modules. */
 const PACKAGES: Record<string, string[]> = {
   "react-slot": [],
+  "react-reducer-context": ["reducer-context", "draft-context"],
+  "react-reserve-layout": ["index"],
   "react-hover-highlight": ["index"],
-  "react-grid-list": ["components", "hooks", "state", "reducer-context", "pile"],
+  "react-grid-list": ["components", "hooks", "state", "pile"],
+  "react-form": ["form", "auto-submit", "masked-input"],
+  "react-interactive-form": ["interactive-form"],
+  "react-navigation-form": ["navigation-form"],
 };
+
+/**
+ * Packages that import `next/navigation`. Next has no `exports` map, so only a bundler (Next's own, which
+ * aliases that specifier) resolves it; plain Node cannot import these, and is not meant to.
+ */
+const BUNDLER_ONLY = new Set(["react-interactive-form", "react-navigation-form"]);
 
 const failures: string[] = [];
 
@@ -49,6 +60,7 @@ for (const [name, clientModules] of Object.entries(PACKAGES)) {
   else if (packedManifest.includes("workspace:")) failures.push(`${name}: packed package.json still has a workspace: range`);
   rmSync(out, { recursive: true, force: true });
 
+  if (BUNDLER_ONLY.has(name)) continue;
   const node = Bun.spawnSync(
     ["node", "--input-type=module", "-e", `const m = await import("@tungv/${name}"); if (Object.keys(m).length === 0) process.exit(1);`],
     { cwd: dir, stderr: "pipe" },

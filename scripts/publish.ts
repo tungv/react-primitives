@@ -4,7 +4,16 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
-const ORDER = ["react-slot", "react-hover-highlight", "react-grid-list"];
+const ORDER = [
+  "react-slot",
+  "react-reducer-context",
+  "react-reserve-layout",
+  "react-hover-highlight",
+  "react-grid-list",
+  "react-form",
+  "react-interactive-form",
+  "react-navigation-form",
+];
 const dryRun = process.argv.includes("--dry-run");
 const root = join(import.meta.dir, "..");
 

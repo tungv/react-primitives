@@ -1,0 +1,46 @@
+/*
+ * @tungv/react-reserve-layout styles. Import once, after your own reset or Tailwind:
+ *
+ *   @import "@tungv/react-reserve-layout/styles.css";
+ *
+ * The rules sit in the `components` cascade layer inside `:where()`, so a class you put on a part wins.
+ */
+
+@layer components {
+  /* One cell for every child, so the largest alternative sets the size and none of them moves. */
+  :where([data-slot="reserve-layout"]) {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    grid-template-rows: repeat(1, minmax(0, 1fr));
+    place-items: center;
+  }
+
+  :where([data-slot="reserve-layout"] > *) {
+    grid-column-start: 1;
+    grid-row-start: 1;
+  }
+
+  :where([data-slot="reserve-layout"][data-place-items="start"]) {
+    place-items: start;
+  }
+
+  :where([data-slot="reserve-layout"][data-place-items="end"]) {
+    place-items: end;
+  }
+
+  :where([data-slot="reserve-layout"][data-place-items="stretch"]) {
+    place-items: stretch;
+  }
+
+  :where([data-slot="reserve-layout"][data-place-items="baseline"]) {
+    place-items: baseline;
+  }
+
+  :where([data-slot="reserve-layout-hidden"]) {
+    visibility: hidden;
+  }
+
+  :where([data-slot="reserve-layout-visible"]) {
+    visibility: visible;
+  }
+}

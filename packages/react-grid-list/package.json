@@ -48,6 +48,7 @@
   },
   "dependencies": {
     "@tungv/react-hover-highlight": "workspace:^",
+    "@tungv/react-reducer-context": "workspace:^",
     "@tungv/react-slot": "workspace:^"
   }
 }

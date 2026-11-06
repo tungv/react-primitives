@@ -18,6 +18,9 @@
     },
     {
       "path": "../react-hover-highlight/tsconfig.build.json"
+    },
+    {
+      "path": "../react-reducer-context/tsconfig.build.json"
     }
   ]
 }

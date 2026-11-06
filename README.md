@@ -1,12 +1,17 @@
 # tungv/react-primitives
 
-Accessible React primitives for lists people move through and act on, each published on its own:
+Accessible React primitives for lists and forms people move through and act on, each published on its own:
 
 | Package | | Depends on |
 | --- | --- | --- |
-| [`@tungv/react-grid-list`](packages/react-grid-list) | Grid lists: one tab stop, arrow-key rows and actions, selection, form fields, composite rows. Safe for streamed, partially hydrated rows. | react-slot, react-hover-highlight |
+| [`@tungv/react-grid-list`](packages/react-grid-list) | Grid lists: one tab stop, arrow-key rows and actions, selection, form fields, composite rows. Safe for streamed, partially hydrated rows. | react-slot, react-hover-highlight, react-reducer-context |
 | [`@tungv/react-hover-highlight`](packages/react-hover-highlight) | One hover fill that glides between a list's items, positioned by CSS anchor positioning. | react-slot |
-| [`@tungv/react-slot`](packages/react-slot) | `asChild`/`render` prop merging. | none |
+| [`@tungv/react-form`](packages/react-form) | Form primitives on native constraint validation: fields, labels, controls, messages, auto-submit, masked input. | react-slot, react-reducer-context, react-reserve-layout |
+| [`@tungv/react-interactive-form`](packages/react-interactive-form) | A form whose action runs in a transition: field and form errors, pending state, focus restore, redirect and refresh. | react-slot, react-reducer-context, react-reserve-layout, `next` (peer) |
+| [`@tungv/react-navigation-form`](packages/react-navigation-form) | GET forms for search and filters that navigate with the Next.js router. | react-slot, react-reserve-layout, `next` (peer) |
+| [`@tungv/react-reserve-layout`](packages/react-reserve-layout) | Swap content (a button's "Save" and "Saving…") without layout shift. | none |
+| [`@tungv/react-reducer-context`](packages/react-reducer-context) | One reducer behind separate state and dispatch contexts, and scoped editor drafts. | none |
+| [`@tungv/react-slot`](packages/react-slot) | `asChild`/`render` prop merging and ref composition. | none |
 
 Install the one you use; its dependencies come with it. React 19 is a peer dependency of each. The packages
 with styles ship one stylesheet each (`@tungv/<name>/styles.css`). The rules sit in the `components` cascade

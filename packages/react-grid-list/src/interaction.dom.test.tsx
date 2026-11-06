@@ -1,7 +1,5 @@
-// Keyboard, pointer and form behaviour in a DOM (happy-dom). The server-rendering tests run in the same
-// process without browser globals, so this file registers the DOM for its own tests only.
-import { GlobalRegistrator } from "@happy-dom/global-registrator";
-import { afterAll, afterEach, beforeAll, describe, expect, test } from "bun:test";
+// Runs in the shared happy-dom (scripts/happy-dom.ts); see the root `test` script.
+import { afterEach, beforeAll, describe, expect, test } from "bun:test";
 import { useState } from "react";
 
 type Testing = typeof import("@testing-library/react");
@@ -13,21 +11,12 @@ let userEvent: UserEvent;
 let parts: Parts;
 
 beforeAll(async () => {
-  GlobalRegistrator.register();
-  // React's act() warnings ask for this flag. Testing Library would set it and register its cleanup with
-  // hooks of its own, which cannot be added from inside this one, so this file does both itself.
-  (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
-  process.env["RTL_SKIP_AUTO_CLEANUP"] = "true";
   testing = await import("@testing-library/react");
   userEvent = (await import("@testing-library/user-event")).userEvent;
   parts = await import("./index.js");
 });
 
 afterEach(() => testing.cleanup());
-
-afterAll(async () => {
-  await GlobalRegistrator.unregister();
-});
 
 const PEOPLE = [
   { id: "ada", name: "Ada" },

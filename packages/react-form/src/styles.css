@@ -1,0 +1,53 @@
+/*
+ * @tungv/react-form styles. Import once, after your own reset or Tailwind:
+ *
+ *   @import "@tungv/react-form/styles.css";
+ *
+ * It brings @tungv/react-reserve-layout's stylesheet with it, which form messages render in.
+ *
+ * These are the reference design's classes as plain CSS. They sit in the `components` cascade layer inside
+ * `:where()`, so a class you put on a part wins over them, whichever order the two are declared in.
+ *
+ * Custom properties, on the form or any ancestor:
+ *   --form-error-color   messages for a failed constraint (default: #dc2626)
+ */
+
+@import "@tungv/react-reserve-layout/styles.css";
+
+@layer components {
+  :where([data-slot="form"]) {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 1rem;
+    width: 100%;
+    max-width: 28rem;
+    padding: 1rem;
+  }
+
+  :where([data-slot="form-field"]) {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 0.5rem;
+  }
+
+  :where([data-slot="form-label"]) {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    user-select: none;
+  }
+
+  :where([data-slot="form-message"]) {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    color: color-mix(in oklab, currentColor 80%, transparent);
+  }
+
+  :where([data-slot="form-message"][data-invalid]) {
+    color: var(--form-error-color, #dc2626);
+  }
+}

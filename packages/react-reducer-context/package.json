@@ -1,0 +1,43 @@
+{
+  "name": "@tungv/react-reducer-context",
+  "version": "0.1.0",
+  "description": "createReducerContext for React: one reducer, separate state and dispatch contexts, with optional dispatch middleware; plus createDraftContext for scoped editor drafts.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tungv/react-primitives.git",
+    "directory": "packages/react-reducer-context"
+  },
+  "keywords": [
+    "react",
+    "context",
+    "reducer",
+    "state",
+    "draft"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "!dist/.tsbuildinfo",
+    "src",
+    "!src/**/*.test.ts",
+    "!src/**/*.test.tsx",
+    "README.md",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "tsc -b tsconfig.build.json",
+    "prepack": "bun run build"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0"
+  }
+}
